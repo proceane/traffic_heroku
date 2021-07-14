@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -16,7 +17,7 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
 
     <!-- custom.css -->
-    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
 
 </head>
 
@@ -149,8 +150,8 @@
     </div>
 
     <!-- search.js -->
-    <script type="text/javascript" src="js/search.js"></script>
-    <script type="text/javascript" src="js/highway.js"></script>
+    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/highway.js' %}"></script>
 
     <script>
         autocomplete(document.getElementById("road"), road_list, document.getElementById("conzoneId"), conzone_list);
