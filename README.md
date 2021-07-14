@@ -10,3 +10,7 @@ heroku-deploy에서 작업 후 오류가 발생하지 않으면 빌드 테스트
 ## 이전 프로젝트와 차이
 1. 페이지 구성  
   메인페이지에서 검색 + 전체통계 표시 -> 메인페이지에서 전체통계 / 검색페이지에서 검색하도록 페이지 분리
+  
+## Reference
+template : https://github.com/tailwindtoolbox/Admin-Template  
+autoComplete : https://www.w3schools.com/howto/howto_js_autocomplete.asp
