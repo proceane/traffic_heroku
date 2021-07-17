@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -14,6 +15,9 @@
     <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet"> <!--Replace with your tailwind.css once created-->
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <!-- custom.css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
 
 </head>
 
@@ -77,8 +81,8 @@
                             <div class="rounded-full p-5 bg-purple-600"><i class="fas fa-car fa-2x fa-inverse"></i></div>
                         </div>
                         <div class="flex-1 text-right md:text-center">
-                            <h5 class="font-bold uppercase text-gray-600">장수IC-송내IC(수도권 제1순환선)</h5>
-                            <h3 class="font-bold text-3xl">110 대</h3>
+                            <h5 class="font-bold uppercase text-gray-600">{{traffic_asc.0.conzoneName}}({{traffic_asc.0.routeName}})</h5>
+                            <h3 class="font-bold text-3xl">{{traffic_asc.0.trafficAmout}} 대 <div class="text-sm">(속도 {{traffic_asc.0.speed}} km/h)</div></h3>
                         </div>
                     </div>
                 </div>
@@ -95,8 +99,8 @@
                             <div class="rounded-full p-5 bg-pink-700"><i class="fa fa-flag-checkered fa-2x fa-inverse"></i></div>
                         </div>
                         <div class="flex-1 text-right md:text-center">
-                            <h5 class="font-bold uppercase text-gray-600">논산JC-논산IC(호남지선)</h5>
-                            <h3 class="font-bold text-3xl">140 Km</h3>
+                            <h5 class="font-bold uppercase text-gray-600">{{speed_asc.0.conzoneName}}({{speed_asc.0.routeName}})</h5>
+                            <h3 class="font-bold text-3xl">{{speed_asc.0.speed}} Km/h <div class="text-sm">(교통량 {{speed_asc.0.trafficAmout}} 대)</div></h3>
                         </div>
                     </div>
                 </div>
@@ -118,7 +122,15 @@
 				                text: '교통량'
 				            },
 				            xAxis: {
-				                categories: ['정안IC-남풍세IC(논산천안선)', '논산JC-논산IC(호남지선)', '남원주IC-신림IC(중앙선)', '신평IC-서원주IC(광주원주선)', '목천IC-옥산JC(경부선)']
+				                categories: [
+					                {% for data in traffic_asc %}
+					                	{% if forloop.last %}
+	                                        '{{ data.conzoneName }}\n({{data.routeName}})'
+	                                    {% else %}
+	                                        '{{ data.conzoneName }}\n({{data.routeName}})',
+	                                    {% endif %}
+					                {% endfor %}
+				                ]
 				            },
 				            yAxis: {
 				                title: {
@@ -127,7 +139,15 @@
 				            },
 				            series: [{
 				                name: 'Traffic',
-				                data: [105, 101, 99, 98, 95]
+				                data: [
+				                	{% for data in traffic_asc %}
+					                	{% if forloop.last %}
+	                                        {{ data.trafficAmout }}
+	                                    {% else %}
+	                                        {{ data.trafficAmout }},
+	                                    {% endif %}
+					                {% endfor %}
+				                ]
 				            }],
 				            colors: ['#8B5CF6']
 				        })
@@ -148,7 +168,15 @@
 				                text: '속도'
 				            },
 				            xAxis: {
-				                categories: ['정안IC-남풍세IC(논산천안선)', '논산JC-논산IC(호남지선)', '남원주IC-신림IC(중앙선)', '신평IC-서원주IC(광주원주선)', '목천IC-옥산JC(경부선)']
+				                categories: [
+				                	{% for data in speed_asc %}
+					                	{% if forloop.last %}
+	                                        '{{ data.conzoneName }}\n({{data.routeName}})'
+	                                    {% else %}
+	                                        '{{ data.conzoneName }}\n({{data.routeName}})',
+	                                    {% endif %}
+					                {% endfor %}
+				                ]
 				            },
 				            yAxis: {
 				                title: {
@@ -157,7 +185,15 @@
 				            },
 				            series: [{
 				                name: 'Speed',
-				                data: [105, 101, 99, 98, 95]
+				                data: [
+				                	{% for data in speed_asc %}
+					                	{% if forloop.last %}
+	                                        {{ data.speed }}
+	                                    {% else %}
+	                                        {{ data.speed }},
+	                                    {% endif %}
+					                {% endfor %}
+				                ]
 				            }],
 				            colors: ['#8B5CF6']
 				        });
@@ -187,8 +223,8 @@
                             <div class="rounded-full p-5 bg-blue-600"><i class="fas fa-car fa-2x fa-inverse"></i></div>
                         </div>
                         <div class="flex-1 text-right md:text-center">
-                            <h5 class="font-bold uppercase text-gray-600">장수IC-송내IC(수도권 제1순환선)</h5>
-                            <h3 class="font-bold text-3xl">110 대</h3>
+                            <h5 class="font-bold uppercase text-gray-600">{{traffic_desc.0.conzoneName}}({{traffic_desc.0.routeName}})</h5>
+                            <h3 class="font-bold text-3xl">{{traffic_desc.0.trafficAmout}} 대 <div class="text-sm">(속도 {{traffic_desc.0.speed}} km/h)</div></h3>
                         </div>
                     </div>
                 </div>
@@ -205,8 +241,8 @@
                             <div class="rounded-full p-5 bg-indigo-600"><i class="fa fa-flag-checkered fa-2x fa-inverse"></i></div>
                         </div>
                         <div class="flex-1 text-right md:text-center">
-                            <h5 class="font-bold uppercase text-gray-600">논산JC-논산IC(호남지선)</h5>
-                            <h3 class="font-bold text-3xl">140 Km</h3>
+                            <h5 class="font-bold uppercase text-gray-600">{{speed_desc.0.conzoneName}}({{speed_desc.0.routeName}})</h5>
+                            <h3 class="font-bold text-3xl">{{speed_desc.0.speed}} Km/h <div class="text-sm">(교통량 {{speed_asc.0.trafficAmout}} 대)</div></h3>
                         </div>
                     </div>
                 </div>
@@ -228,7 +264,15 @@
 				                text: '교통량'
 				            },
 				            xAxis: {
-				                categories: ['정안IC-남풍세IC(논산천안선)', '논산JC-논산IC(호남지선)', '남원주IC-신림IC(중앙선)', '신평IC-서원주IC(광주원주선)', '목천IC-옥산JC(경부선)']
+				                categories: [
+				                	{% for data in traffic_desc %}
+					                	{% if forloop.last %}
+	                                        '{{ data.conzoneName }}\n({{data.routeName}})'
+	                                    {% else %}
+	                                        '{{ data.conzoneName }}\n({{data.routeName}})',
+	                                    {% endif %}
+					                {% endfor %}
+				                ]
 				            },
 				            yAxis: {
 				                title: {
@@ -237,7 +281,15 @@
 				            },
 				            series: [{
 				                name: 'Traffic',
-				                data: [30, 37, 45, 48, 50]
+				                data: [
+				                	{% for data in traffic_desc %}
+					                	{% if forloop.last %}
+	                                        {{ data.trafficAmout }}
+	                                    {% else %}
+	                                        {{ data.trafficAmout }},
+	                                    {% endif %}
+					                {% endfor %}
+				                ]
 				            }],
 				            colors: ['#3B82F6']
 				        });
@@ -258,7 +310,15 @@
 				                text: '속도'
 				            },
 				            xAxis: {
-				                categories: ['정안IC-남풍세IC(논산천안선)', '논산JC-논산IC(호남지선)', '남원주IC-신림IC(중앙선)', '신평IC-서원주IC(광주원주선)', '목천IC-옥산JC(경부선)']
+				                categories: [
+				                	{% for data in speed_desc %}
+					                	{% if forloop.last %}
+	                                        '{{ data.conzoneName }}\n({{data.routeName}})'
+	                                    {% else %}
+	                                        '{{ data.conzoneName }}\n({{data.routeName}})',
+	                                    {% endif %}
+					                {% endfor %}
+				                ]
 				            },
 				            yAxis: {
 				                title: {
@@ -267,7 +327,15 @@
 				            },
 				            series: [{
 				                name: 'Speed',
-				                data: [40, 43, 50, 55, 57]
+				                data: [
+				                	{% for data in speed_desc %}
+					                	{% if forloop.last %}
+	                                        {{ data.speed }}
+	                                    {% else %}
+	                                        {{ data.speed }},
+	                                    {% endif %}
+					                {% endfor %}
+				                ]
 				            }],
 				            colors: ['#3B82F6']
 				        });
