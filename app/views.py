@@ -10,8 +10,11 @@ def main(request):
 
 #검색 페이지
 def search(request):
-	searchData = {}
 	conzoneId = request.GET.get('conzoneId')
+	searchData = {'conzoneId' : conzoneId}
 	if conzoneId :
-		searchData = traffic.getSearchData(conzoneId)
+		searchData['searchData'] = traffic.getSearchData(conzoneId)
+		if len(searchData['searchData']) > 0 :
+			searchData['mapSearch'] = searchData['searchData']['conzoneName'].split('-')[0]
+	print(searchData)
 	return render(request, 'app/search.html', searchData)
