@@ -16,5 +16,4 @@ def search(request):
 		searchData['searchData'] = traffic.getSearchData(conzoneId)
 		if len(searchData['searchData']) > 0 :
 			searchData['mapSearch'] = searchData['searchData']['conzoneName'].split('-')[0]
-	print(searchData)
 	return render(request, 'app/search.html', searchData)
